@@ -29,7 +29,7 @@ gen_reasoning_prompt = {
     "Date": """Provide your step-by-step reasoning to the question first, and then print \"The answer is (x)\" where x is A, B, C, D, E or F, at the end of your response.""",
 }
 
-reasoning_prompt = """Option ({option}) is {is_correct}. Briefly explain why it is {is_correct} without explaining other options."""
+
 
 options = {
     "CSQA": ["A", "B", "C", "D", "E"],

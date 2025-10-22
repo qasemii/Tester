@@ -104,14 +104,12 @@ if __name__ == '__main__':
     base_model = f"meta-llama/{args.model}-Instruct"
   elif "gemma" in args.model:
     base_model = f"google/{args.model}-it"
-  elif "qwen2.5" in args.model:
-    base_model = f"Qwen/{args.model}-Instruct"
   elif args.model == 'olmo-2-1b':
     base_model = 'allenai/OLMo-2-0425-1B-Instruct'
-  elif args.model == 'qwen-2.5-7b':
-    base_model = 'Qwen/Qwen2.5-7B-Instruct'
-  elif args.model == 'qwen-3-4b':
-    base_model = 'Qwen/Qwen3-4B-Instruct-2507'
+  elif args.model == 'olmo-2-7b':
+    base_model = 'allenai/OLMo-2-1124-7B-Instruct'
+  elif args.model == 'olmo-2-13b':
+    base_model = 'allenai/OLMo-2-1124-13B-Instruct'
   else:
     raise ValueError(f"Unsupported model: {args.model}")
 
@@ -136,13 +134,14 @@ if __name__ == '__main__':
   def create_ir_template(question, reasoning, gold_answer):
     messages = [
       {"role": "user", "content": f"Identify the incorrect options to reach the correct answers:\n### Question: {question}"},
-      {"role": "assistant", "content": f"### Answer: {reasoning} Therefore the correct answer is option ({gold_answer})."}
+      {"role": "assistant", "content": f"### Answer: {reasoning} Therefore, the correct answer is option ({gold_answer})."}
     ]
     return tokenizer.apply_chat_template(messages, tokenize=False)
 
   model = transformers.AutoModelForCausalLM.from_pretrained(
       base_model,
       device_map='auto',
+      torch_dtype=torch.bfloat16 if torch.cuda.is_available() else torch.float32,
       cache_dir=args.model_dir
   )
 

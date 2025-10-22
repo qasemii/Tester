@@ -86,14 +86,41 @@ def get_number_choice(text):
 
 
 def get_alphabet_choice(text):
-  if not text:
+    # if not text:
+    #     return "N/A"
+    # match = re.findall(r"answer is \((A|B|C|D|E|F)\)", text)
+    # if match:
+    #     return match[-1]
+    # else:
+    #     match = re.findall(r"\((A|B|C|D|E|F)\)", text)
+    #     return match[-1] if match else "N/A"
+    patterns = [
+        r"answer is \*\*(\w)",
+        r"answer is (\w)",
+        # r"Option\s*\(([A-E])\)[^\.]*?\bis correct\b",
+        # r'Option \(([A-E])\) is correct',
+        # r"option\s*\(([A-E])\)[^\.]*?\bis correct\b",
+        # r'option \(([A-E])\) is correct',
+        # r'answer is \(([A-E])\)',
+        # r'answer is option \(([A-E])\)',
+        # r"answer is ([A-E])\)",#Llama3.2-3b
+        # r"Answer:\s*\(([A-E])\)",#Llama3.1-8b
+        # r":\s*([A-E])",
+        # r"\*\*\((\w)\)",
+        # r"\*\*(\w)\)",
+        # r"\*\*(\w)\)",
+        # r"\*\*([A-E])\*\*",
+        # r"\\boxed\{([A-E])\}",#Llama3.1-8b
+        # r"\s*\(([A-E])\)",
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            return match.group(1)
+    
+    # Fallback: return the first option letter found
     return "N/A"
-  match = re.findall(r"answer is \((A|B|C|D|E|F)\)", text)
-  if match:
-    return match[-1]
-  else:
-    match = re.findall(r"\((A|B|C|D|E|F)\)", text)
-    return match[-1] if match else "N/A"
 
 
 def get_true_false(text):
