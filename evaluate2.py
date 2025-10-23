@@ -96,8 +96,8 @@ if __name__ == "__main__":
     llm = LLM(model=base_model,
             enable_lora=False,
             download_dir=args.model_dir,
-            tensor_parallel_size=1,
-            gpu_memory_utilization=0.4)
+            tensor_parallel_size=1)#,
+            # gpu_memory_utilization=0.4)
             # max_model_len=8192)
     
     outputs = llm.generate(prompts,
