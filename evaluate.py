@@ -57,6 +57,8 @@ if __name__ == "__main__":
         base_model = 'allenai/OLMo-2-1124-13B-Instruct'
     elif args.model == 'qwen-2.5-7b':
         base_model = 'Qwen/Qwen2.5-7B'
+    elif args.model == "smollm-2-1.7b":
+        base_model = 'HuggingFaceTB/SmolLM2-1.7B-Instruct'
     else:
         raise ValueError(f"Unsupported model: {args.model}")
     
@@ -87,7 +89,7 @@ if __name__ == "__main__":
     {question}
     """
   
-  # Use unified chat template approach
+    # Use unified chat template approach
     def create_prompt(question):
         messages = [
             {"role": "user", "content": reasoning_prompt.format(question=question)}
